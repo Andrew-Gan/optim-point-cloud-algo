@@ -1,0 +1,50 @@
+Research Log by Andrew Gan
+
+Mar 16, 2020
+
+Decided to move construction of the tree along with the traversal process to the GPU
+to exploit parallel computation and to avoid need of maintaining two copies of the
+same data set on device and host memory.
+
+Feb 12, 2020
+
+Changed enlargement into a factor instead of fixed range
+
+This was done to account for the different sizes of subspaces that are partitioned.
+This prevents small boxes from having too much overlap.
+
+Instead of mean, the median point will be used for slicing subspaces along a dimension
+
+The former does not guarantee even splitting of points into two subspaces. 
+After consulting professor, it is decided that the median point would be used.
+Note: not yet implemented as of Feb 12 2020
+
+Feb 11, 2020
+
+Circulation slicing vs. Slicing longest dimensions
+
+It is decided that circulating is better because points may be aligned
+in a straight line along the longest dimension, resulting in partitions
+where all points are classified to one child.
+It seems either method achieves the purpose of splitting points evenly.
+
+Slicing by mean of parent boundary vs. slicing by mean of points
+
+The latter option was chosen to allow for points to be evenly distributed
+among both child subspaces. Slicing by mean value of parent subspace
+boundary might result in uneven distribution of points, reducing efficiency.
+For the purpose of kNN, this method is preferred.
+
+Feb 09, 2020
+
+Implement spill-tree vs. hybrid spill-tree
+
+Hybrid tree is selected due to its ability to strike a balance between
+accuracy (spill) and efficiency (metric). It also accounts for scenarios
+where too many points overlap and metric partition is optimal.
+
+Nodes contain points info vs. nodes containing only boundary info
+
+Decided that nodes should contain point info so that when a query point
+is chosen, the candidate nodes can have their points searched quickly 
+instead of recalculating points that belong to node.

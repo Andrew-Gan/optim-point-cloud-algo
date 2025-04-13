@@ -1,0 +1,5 @@
+Mar 25, 2020
+Convert all vector constructions to Vec, all functions are global
+
+Mar 26, 2020
+Declare and define CheckIfInsideSubspace(float*) as a device function
